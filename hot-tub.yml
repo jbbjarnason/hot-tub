@@ -10,10 +10,23 @@ esp32:
   board: m5stack-core2
 
 globals:
-  - id: target_temperature_value
+  - id: target_temp
     type: int
     restore_value: no
     initial_value: '37'
+  - id: mixer_temp
+    type: double
+    restore_value: no
+    initial_value: '37'
+  - id: tub_temp
+    type: double
+    restore_value: no
+    initial_value: '37'
+  - id: running
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  
 
 # To be able to get logs from the device via serial and api.
 logger:
@@ -36,15 +49,34 @@ binary_sensor:
   - platform: gpio
     id: M5_BtnA
     pin:
+      number: 39
+      inverted: true
+    on_click:
+      then:
+        - lambda: |-
+            id(target_temp)++;
+  - platform: gpio
+    id: M5_BtnC
+    pin:
+      number: 37
+      inverted: true
+    on_click:
+      then:
+        - lambda: |-
+            id(target_temp)--;
+  - platform: gpio
+    id: M5_BtnB
+    pin:
       number: 38
       inverted: true
     on_click:
       then:
-        - light.toggle: back_light
-
+        - lambda: |-
+            id(running) = !id(running);
+    
 
 image:
-  - file: "tub.png"
+  - file: "tub2.jpg"
     id: tub_img
     resize: 320x240
     type: RGB24
@@ -68,8 +100,13 @@ light:
 
 font:
   - file: "gfonts://Roboto"
-    id: my_font
+    id: large_font
     size: 30
+    glyphs: '!"%()+,-_.:°[]0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/³µ'
+  - file: "gfonts://Roboto"
+    id: small_font
+    size: 25
+    glyphs: '!"%()+,-_.:°[]0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/³µ'
 
 color:
   - id: RED
@@ -84,6 +121,10 @@ color:
     red: 100%
     green: 100%
     blue: 100%
+  - id: BLACK
+    red: 0%
+    green: 0%
+    blue: 0%
 
 display: # uses spi
   - platform: ili9xxx
@@ -94,5 +135,23 @@ display: # uses spi
     reset_pin: 33
     rotation: 0
     lambda: |-
-      it.print(it.get_width()/3, 200, id(my_font), WHITE, TextAlign::CENTER, "+");
-      //it.printf(it.get_width() - 77, 209, id(font_roboto_medium22), WHITE, TextAlign::RIGHT, "%.0f", id(sensor_dew_point).state);
+      it.image(0, 0, id(tub_img));
+
+      it.print(it.get_width()/2, 20, id(large_font), BLACK, TextAlign::CENTER, "Temperature [°C]");
+
+      it.print(it.get_width()/5, 50, id(small_font), BLACK, TextAlign::CENTER, "Mixer");
+      it.print(it.get_width()/2, 50, id(small_font), RED, TextAlign::CENTER, "Target");
+      it.print((it.get_width()/5)*4, 50, id(small_font), BLACK, TextAlign::CENTER, "Tub");
+
+      it.printf(it.get_width()/5, 80, id(large_font), BLACK, TextAlign::CENTER, "%.0f", id(mixer_temp));
+      it.printf(it.get_width()/2, 80, id(large_font), RED, TextAlign::CENTER, "%d", id(target_temp));
+      it.printf((it.get_width()/5)*4, 80, id(large_font), BLACK, TextAlign::CENTER, "%.0f", id(tub_temp));
+
+      it.print(it.get_width()/5, 220, id(large_font), WHITE, TextAlign::CENTER, "+");
+      if (id(running)) {
+        it.print(it.get_width()/2, 220, id(large_font), WHITE, TextAlign::CENTER, "Off");
+      }
+      else {
+        it.print(it.get_width()/2, 220, id(large_font), WHITE, TextAlign::CENTER, "On");
+      }
+      it.print((it.get_width()/5)*4, 220, id(large_font), WHITE, TextAlign::CENTER, "-");
