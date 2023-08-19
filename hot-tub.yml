@@ -35,7 +35,7 @@ logger:
 api:
 
 wifi:
-  ssid: "DialUp"
+  ssid: "DialUp_Things"
   password: "jbb2410abh"
   ap:
     ssid: "Fallback Hotspot"
@@ -86,10 +86,30 @@ spi:
   mosi_pin: 23
   miso_pin: 19
 
+i2c:
+  sda: 21
+  scl: 22
+  scan: true
+  id: bus_a
+
+gp8403:
+  i2c_id: bus_a
+  id: my_gp8403
+  address: 0x5F
+  voltage: 10V
+
 output:
   - platform: ledc
     pin: 32
     id: gpio_32_backlight_pwm
+  - platform: gp8403
+    id: mixer_ctrl
+    gp8403_id: my_gp8403
+    channel: 0
+  - platform: gp8403
+    id: valve_ctrl
+    gp8403_id: my_gp8403
+    channel: 1
 
 light:
   - platform: monochromatic
@@ -97,6 +117,16 @@ light:
     name: "Display Backlight"
     id: back_light
     restore_mode: ALWAYS_ON
+
+  - platform: monochromatic
+    name: "Mixer ctrl"
+    output: mixer_ctrl
+    gamma_correct: 1
+
+  - platform: monochromatic
+    name: "Valve ctrl"
+    output: valve_ctrl
+    gamma_correct: 1
 
 font:
   - file: "gfonts://Roboto"
