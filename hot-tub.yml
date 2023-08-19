@@ -1,0 +1,98 @@
+# docs:
+# https://docs.m5stack.com/en/core/core2
+# https://docs.m5stack.com/en/core/CORE%20Metal
+
+esphome:
+  name: hot-tub
+  friendly_name: "Hot tub"
+
+esp32:
+  board: m5stack-core2
+
+globals:
+  - id: target_temperature_value
+    type: int
+    restore_value: no
+    initial_value: '37'
+
+# To be able to get logs from the device via serial and api.
+logger:
+
+# API is a requirement of the dashboard import.
+api:
+
+wifi:
+  ssid: "DialUp"
+  password: "jbb2410abh"
+  ap:
+    ssid: "Fallback Hotspot"
+    password: "Th1s1s4P4ssw0rd"
+
+# In combination with the `ap` this allows the user
+# to provision Wi-Fi credentials to the device.
+captive_portal:
+
+binary_sensor:
+  - platform: gpio
+    id: M5_BtnA
+    pin:
+      number: 38
+      inverted: true
+    on_click:
+      then:
+        - light.toggle: back_light
+
+
+image:
+  - file: "tub.png"
+    id: tub_img
+    resize: 320x240
+    type: RGB24
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+  miso_pin: 19
+
+output:
+  - platform: ledc
+    pin: 32
+    id: gpio_32_backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: gpio_32_backlight_pwm
+    name: "Display Backlight"
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+font:
+  - file: "gfonts://Roboto"
+    id: my_font
+    size: 30
+
+color:
+  - id: RED
+    red: 100%
+    green: 0%
+    blue: 0%
+  - id: BLUE
+    red: 0%
+    green: 0%
+    blue: 100%
+  - id: WHITE
+    red: 100%
+    green: 100%
+    blue: 100%
+
+display: # uses spi
+  - platform: ili9xxx
+    id: m5stack_display
+    model: M5Stack
+    cs_pin: 14
+    dc_pin: 27
+    reset_pin: 33
+    rotation: 0
+    lambda: |-
+      it.print(it.get_width()/3, 200, id(my_font), WHITE, TextAlign::CENTER, "+");
+      //it.printf(it.get_width() - 77, 209, id(font_roboto_medium22), WHITE, TextAlign::RIGHT, "%.0f", id(sensor_dew_point).state);
