@@ -5,6 +5,11 @@
 esphome:
   name: hot-tub
   friendly_name: "Hot tub"
+  # libraries:
+  #   - file:///home/jonb/Projects/hot-tub/my_components
+
+external_components:
+  - source: components
 
 esp32:
   board: m5stack-core2
@@ -44,6 +49,14 @@ wifi:
 # In combination with the `ap` this allows the user
 # to provision Wi-Fi credentials to the device.
 captive_portal:
+
+switch:
+  - platform: m5stack2relay
+    id: relay_1_230V
+    relay_1: relay 1
+  - platform: m5stack2relay
+    id: relay_2_230V
+    relay_2: relay 2
 
 binary_sensor:
   - platform: gpio
