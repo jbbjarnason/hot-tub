@@ -5,8 +5,6 @@
 esphome:
   name: hot-tub
   friendly_name: "Hot tub"
-  # libraries:
-  #   - file:///home/jonb/Projects/hot-tub/my_components
 
 external_components:
   - source: components
@@ -50,6 +48,36 @@ wifi:
 # to provision Wi-Fi credentials to the device.
 captive_portal:
 
+dallas:
+  - pin: GPIO5
+    update_interval: 2s
+    id: hub_1
+  - pin: GPIO15
+    update_interval: 2s
+    id: hub_2
+
+sensor:
+  - platform: dallas
+    dallas_id: hub_1
+    index: 0
+    # address: 0x493c01e076085b28
+    name: Temperature Mixer
+    id : mixer_temp_sensor
+    on_value: 
+      then:
+        - lambda: |-
+            id(mixer_temp) = x;
+  - platform: dallas
+    dallas_id: hub_2
+    index: 0
+    # address: 0x493c01e076085b28
+    name: Temperature Tub
+    id : tub_temp_sensor
+    on_value: 
+      then:
+        - lambda: |-
+            id(tub_temp) = x;
+
 switch:
   - platform: m5stack2relay
     id: relay_1_230V
@@ -64,7 +92,7 @@ binary_sensor:
     pin:
       number: 39
       inverted: true
-    on_click:
+    on_press:
       then:
         - lambda: |-
             id(target_temp)++;
@@ -73,7 +101,7 @@ binary_sensor:
     pin:
       number: 37
       inverted: true
-    on_click:
+    on_press:
       then:
         - lambda: |-
             id(target_temp)--;
@@ -82,10 +110,11 @@ binary_sensor:
     pin:
       number: 38
       inverted: true
-    on_click:
+    on_press:
       then:
         - lambda: |-
             id(running) = !id(running);
+            printf("new running %d\n", id(running));
     
 
 image:
@@ -186,9 +215,9 @@ display: # uses spi
       it.print(it.get_width()/2, 50, id(small_font), RED, TextAlign::CENTER, "Target");
       it.print((it.get_width()/5)*4, 50, id(small_font), BLACK, TextAlign::CENTER, "Tub");
 
-      it.printf(it.get_width()/5, 80, id(large_font), BLACK, TextAlign::CENTER, "%.0f", id(mixer_temp));
+      it.printf(it.get_width()/5, 80, id(large_font), BLACK, TextAlign::CENTER, "%.1f", id(mixer_temp));
       it.printf(it.get_width()/2, 80, id(large_font), RED, TextAlign::CENTER, "%d", id(target_temp));
-      it.printf((it.get_width()/5)*4, 80, id(large_font), BLACK, TextAlign::CENTER, "%.0f", id(tub_temp));
+      it.printf((it.get_width()/5)*4, 80, id(large_font), BLACK, TextAlign::CENTER, "%.1f", id(tub_temp));
 
       it.print(it.get_width()/5, 220, id(large_font), WHITE, TextAlign::CENTER, "+");
       if (id(running)) {
