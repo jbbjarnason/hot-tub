@@ -29,7 +29,18 @@ globals:
     type: bool
     restore_value: no
     initial_value: 'false'
-  
+  - id: filling
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  - id: offset_filling
+    type: double
+    restore_value: no
+    initial_value: '2'
+  - id: offset_keep_warm
+    type: double
+    restore_value: no
+    initial_value: '4'
 
 # To be able to get logs from the device via serial and api.
 logger:
@@ -86,15 +97,42 @@ sensor:
       then:
         output.set_level:
           id: gp8403_mixer_ctrl
-          level: !lambda 'printf("mixer_ctrl set_level: %f\n", x); return x / 100;'
+          level: !lambda 'if(id(running)) return x / 100; else return 0;'
+  - platform: pid
+    name: Tub sensor pid
+    type: HEAT
+    id: tub_pid
+    climate_id: tub_climate
+    on_value:
+      then:
+        output.set_level:
+          id: gp8403_valve_ctrl
+          # reason for 0.09 is that the valve has difficulties if it is at 0% drawing current, instead use 9%, its still closed
+          level: !lambda 'if(id(running)) return x / 100; else return 0.09;'
 
 climate:
   - platform: pid
     id: mixer_climate
     name: Mixer pid
     sensor: mixer_temp_sensor
-    default_target_temperature: 38°C
-    heat_output: pwm_output2
+    default_target_temperature: 41°C
+    heat_output: placeholder_1
+    control_parameters:
+      kp: 0.4
+      ki: 0.002
+      kd: 0.002
+      min_integral: -1
+      max_integral: 1
+    visual:
+      min_temperature: 18 °C
+      max_temperature: 46 °C
+      temperature_step: 1 °C
+  - platform: pid
+    id: tub_climate
+    name: Tub pid
+    sensor: tub_temp_sensor
+    default_target_temperature: 39°C
+    heat_output: placeholder_1
     control_parameters:
       kp: 0.4
       ki: 0.002
@@ -124,6 +162,20 @@ binary_sensor:
       then:
         - lambda: |-
             id(target_temp)++;
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
+
   - platform: gpio
     id: M5_BtnC
     pin:
@@ -133,6 +185,19 @@ binary_sensor:
       then:
         - lambda: |-
             id(target_temp)--;
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
   - platform: gpio
     id: M5_BtnB
     pin:
@@ -142,6 +207,19 @@ binary_sensor:
       then:
         - lambda: |-
             id(running) = !id(running);
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
             printf("new running %d\n", id(running));
     
 
@@ -181,7 +259,7 @@ output:
     gp8403_id: my_gp8403
     channel: 1
   - platform: ledc
-    id: pwm_output2
+    id: placeholder_1
     pin: GPIO26
     frequency: 50 Hz
 
