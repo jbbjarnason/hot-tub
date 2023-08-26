@@ -16,15 +16,15 @@ globals:
   - id: target_temp
     type: int
     restore_value: no
-    initial_value: '37'
+    initial_value: '38'
   - id: mixer_temp
     type: double
     restore_value: no
-    initial_value: '37'
+    initial_value: '38'
   - id: tub_temp
     type: double
     restore_value: no
-    initial_value: '37'
+    initial_value: '38'
   - id: running
     type: bool
     restore_value: no
@@ -38,8 +38,8 @@ logger:
 api:
 
 wifi:
-  ssid: "DialUp_Things"
-  password: "jbb2410abh"
+  ssid: "Pottur"
+  password: "sjb2709sjb"
   ap:
     ssid: "Fallback Hotspot"
     password: "Th1s1s4P4ssw0rd"
@@ -77,6 +77,34 @@ sensor:
       then:
         - lambda: |-
             id(tub_temp) = x;
+  - platform: pid
+    name: Mixer sensor pid
+    type: HEAT
+    id: mixer_pid
+    climate_id: mixer_climate
+    on_value:
+      then:
+        output.set_level:
+          id: gp8403_mixer_ctrl
+          level: !lambda 'printf("mixer_ctrl set_level: %f\n", x); return x / 100;'
+
+climate:
+  - platform: pid
+    id: mixer_climate
+    name: Mixer pid
+    sensor: mixer_temp_sensor
+    default_target_temperature: 38°C
+    heat_output: pwm_output2
+    control_parameters:
+      kp: 0.4
+      ki: 0.002
+      kd: 0.002
+      min_integral: -1
+      max_integral: 1
+    visual:
+      min_temperature: 18 °C
+      max_temperature: 46 °C
+      temperature_step: 1 °C
 
 switch:
   - platform: m5stack2relay
@@ -145,13 +173,17 @@ output:
     pin: 32
     id: gpio_32_backlight_pwm
   - platform: gp8403
-    id: mixer_ctrl
+    id: gp8403_mixer_ctrl
     gp8403_id: my_gp8403
     channel: 0
   - platform: gp8403
-    id: valve_ctrl
+    id: gp8403_valve_ctrl
     gp8403_id: my_gp8403
     channel: 1
+  - platform: ledc
+    id: pwm_output2
+    pin: GPIO26
+    frequency: 50 Hz
 
 light:
   - platform: monochromatic
@@ -162,12 +194,12 @@ light:
 
   - platform: monochromatic
     name: "Mixer ctrl"
-    output: mixer_ctrl
+    output: gp8403_mixer_ctrl
     gamma_correct: 1
 
   - platform: monochromatic
     name: "Valve ctrl"
-    output: valve_ctrl
+    output: gp8403_valve_ctrl
     gamma_correct: 1
 
 font:
