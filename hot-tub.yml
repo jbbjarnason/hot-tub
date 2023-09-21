@@ -151,8 +151,45 @@ switch:
   - platform: m5stack2relay
     id: relay_2_230V
     relay_2: relay 2
+  - platform: m5stack4in8out
+    id: output_1
+    out_1: out1
 
 binary_sensor:
+  - platform: custom
+    id: m5stack_24v_input_1
+    lambda: |-
+      namespace m5 = m5stack4in8out;
+      auto parent = new m5::m5stack4in8out();
+      parent->set_component_source("esphome.coroutine");
+      App.register_component(parent);
+      parent->set_i2c_bus(bus_a);
+      parent->set_i2c_address(0x45);
+      auto my_custom_sensor = new m5::m5stack4in8out_binarysensor(m5::in_bit_e::in_1);
+      App.register_component(my_custom_sensor);
+      my_custom_sensor->set_parent(parent);
+      return {my_custom_sensor};
+    binary_sensors:
+      name: "M5Stack 24V Input 1"
+      on_press:
+        then:
+          - lambda: |-
+              id(running) = !id(running);
+              // todo duplicated
+              auto mixer_call = id(mixer_climate).make_call();
+              auto tub_call = id(tub_climate).make_call();
+              if (id(filling))
+                mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+              else
+                mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+  
+              tub_call.set_target_temperature(id(target_temp));
+  
+              // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+              mixer_call.perform();
+              tub_call.perform();
+              printf("new running %d\n", id(running));
+
   - platform: gpio
     id: M5_BtnA
     pin:
