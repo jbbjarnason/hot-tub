@@ -37,7 +37,6 @@ class M5_relay_2_switch : public switch_::Switch, public Component, public Paren
 
   void set_assumed_state(bool assumed_state) { this->assumed_state_ = assumed_state; };
 
- protected:
   bool assumed_state() override { return this->assumed_state_; };
 
   void write_state(bool state) override;
