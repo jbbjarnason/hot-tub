@@ -46,7 +46,7 @@ globals:
 logger:
 
 # API is a requirement of the dashboard import.
-#api:
+api:
 
 wifi:
   ssid: "Pottur"
@@ -118,9 +118,9 @@ climate:
     default_target_temperature: 41°C
     heat_output: placeholder_1
     control_parameters:
-      kp: 0.1
+      kp: 0.001
       ki: 0.005
-      kd: 0.7
+      kd: 0.007
       min_integral: -1
       max_integral: 1
     visual:
