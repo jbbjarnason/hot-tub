@@ -27,7 +27,7 @@ globals:
     initial_value: '38'
   - id: running
     type: bool
-    restore_value: no
+    restore_value: yes
     initial_value: 'false'
   - id: filling
     type: bool
