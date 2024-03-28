@@ -1,0 +1,352 @@
+# docs:
+# https://docs.m5stack.com/en/core/core2
+# https://docs.m5stack.com/en/core/CORE%20Metal
+
+esphome:
+  name: hot-tub
+  friendly_name: "Hot tub"
+
+external_components:
+  - source: components
+
+esp32:
+  board: m5stack-core2
+
+globals:
+  - id: target_temp
+    type: int
+    restore_value: no
+    initial_value: '38'
+  - id: mixer_temp
+    type: double
+    restore_value: no
+    initial_value: '38'
+  - id: tub_temp
+    type: double
+    restore_value: no
+    initial_value: '38'
+  - id: running
+    type: bool
+    restore_value: yes
+    initial_value: 'false'
+  - id: filling
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  - id: offset_filling
+    type: double
+    restore_value: no
+    initial_value: '6'
+  - id: offset_keep_warm
+    type: double
+    restore_value: no
+    initial_value: '6'
+
+# To be able to get logs from the device via serial and api.
+logger:
+
+web_server:
+  port: 80
+
+# API is a requirement of the dashboard import.
+api:
+
+wifi:
+  ssid: "Pottur"
+  password: "sjb2709sjb"
+  ap:
+    ssid: "Fallback Hotspot"
+    password: "Th1s1s4P4ssw0rd"
+
+# In combination with the `ap` this allows the user
+# to provision Wi-Fi credentials to the device.
+captive_portal:
+
+dallas:
+  - pin: GPIO5
+    update_interval: 2s
+    id: hub_1
+  - pin: GPIO15
+    update_interval: 2s
+    id: hub_2
+
+sensor:
+  - platform: dallas
+    dallas_id: hub_1
+    index: 0
+    # address: 0x493c01e076085b28
+    name: Temperature Mixer
+    id : mixer_temp_sensor
+    on_value: 
+      then:
+        - lambda: |-
+            id(mixer_temp) = x;
+  - platform: dallas
+    dallas_id: hub_2
+    index: 0
+    # address: 0x493c01e076085b28
+    name: Temperature Tub
+    id : tub_temp_sensor
+    on_value: 
+      then:
+        - lambda: |-
+            id(tub_temp) = x;
+  - platform: pid
+    name: Mixer sensor pid
+    type: HEAT
+    id: mixer_pid
+    climate_id: mixer_climate
+#    on_value:
+#      then:
+#        output.set_level:
+#          id: gp8403_mixer_ctrl
+#          level: !lambda 'if(id(running)) return x / 100; else return 0;'
+  - platform: pid
+    name: Tub sensor pid
+    type: HEAT
+    id: tub_pid
+    climate_id: tub_climate
+#    on_value:
+#      then:
+#        output.set_level:
+#          id: gp8403_valve_ctrl
+#          # reason for 0.09 is that the valve has difficulties if it is at 0% drawing current, instead use 9%, its still closed
+#          level: !lambda |-
+#            auto ret = 0.09;
+#            if(id(running)) {
+#              ret = x / 100;
+#            }
+#            printf("valve ctrl level %f\n", ret);
+#            return ret;
+
+climate:
+  - platform: pid
+    id: mixer_climate
+    name: Mixer pid
+    sensor: mixer_temp_sensor
+    default_target_temperature: 41°C
+    heat_output: placeholder_1
+    control_parameters:
+      kp: 0.001
+      ki: 0.005
+      kd: 0.007
+      min_integral: -1
+      max_integral: 1
+    visual:
+      min_temperature: 2 °C
+      max_temperature: 46 °C
+      temperature_step: 1 °C
+  - platform: pid
+    id: tub_climate
+    name: Tub pid
+    sensor: tub_temp_sensor
+    default_target_temperature: 39°C
+    heat_output: placeholder_1
+    control_parameters:
+      kp: 0.4
+      ki: 0.002
+      kd: 0.002
+      min_integral: -1
+      max_integral: 1
+    visual:
+      min_temperature: 2 °C
+      max_temperature: 46 °C
+      temperature_step: 1 °C
+
+switch:
+  - platform: m5stack2relay
+    id: relay_1_230V
+    relay_1: relay 1
+  - platform: m5stack2relay
+    id: relay_2_230V
+    relay_2: relay 2
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 36
+      inverted: true
+      mode:
+        input: true
+    name: Shelly
+    on_state:
+      then:
+        - lambda: |-
+            id(running) = x;
+            m5stack2relay_m5_relay_2_switch->write_state(!id(running));
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+            mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+            mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
+            printf("new running %d\n", id(running));
+
+  - platform: gpio
+    id: M5_BtnA
+    pin:
+      number: 39
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            id(target_temp)++;
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
+
+  - platform: gpio
+    id: M5_BtnC
+    pin:
+      number: 37
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            id(target_temp)--;
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
+  - platform: gpio
+    id: M5_BtnB
+    pin:
+      number: 38
+      inverted: true
+    on_press:
+      then:
+        - lambda: |-
+            id(running) = !id(running);
+            m5stack2relay_m5_relay_2_switch->write_state(!id(running));
+            // todo duplicated
+            auto mixer_call = id(mixer_climate).make_call();
+            auto tub_call = id(tub_climate).make_call();
+            if (id(filling))
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_filling));
+            else
+              mixer_call.set_target_temperature(id(target_temp) + id(offset_keep_warm));
+
+            tub_call.set_target_temperature(id(target_temp));
+
+            // etc. see API reference https://github.com/esphome/esphome/blob/b20bae23ccac3903239ca68bfb3a4add25b7b44d/esphome/components/climate/climate.h#L38
+            mixer_call.perform();
+            tub_call.perform();
+            printf("new running %d\n", id(running));
+    
+
+image:
+  - file: "tub2.jpg"
+    id: tub_img
+    resize: 320x240
+    type: RGB24
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+  miso_pin: 19
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: true
+  id: bus_a
+
+output:
+  - platform: ledc
+    pin: 32
+    id: gpio_32_backlight_pwm
+  - platform: ledc
+    id: placeholder_1
+    pin: GPIO26
+    frequency: 50 Hz
+
+light:
+  - platform: monochromatic
+    output: gpio_32_backlight_pwm
+    name: "Display Backlight"
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+font:
+  - file: "gfonts://Roboto"
+    id: large_font
+    size: 30
+    glyphs: '!"%()+,-_.:°[]0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/³µ'
+  - file: "gfonts://Roboto"
+    id: small_font
+    size: 25
+    glyphs: '!"%()+,-_.:°[]0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/³µ'
+
+color: # I have made all colors white
+  - id: RED
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: BLUE
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: WHITE
+    red: 100%
+    green: 100%
+    blue: 100%
+  - id: BLACK
+    red: 100%
+    green: 100%
+    blue: 100%
+
+display: # uses spi
+  - platform: ili9xxx
+    id: m5stack_display
+    model: M5Stack
+    cs_pin: 14
+    dc_pin: 27
+    reset_pin: 33
+    rotation: 0
+    lambda: |-
+      // it.image(0, 0, id(tub_img));
+
+      it.print(it.get_width()/2, 20, id(large_font), BLACK, TextAlign::CENTER, "Temperature [°C]");
+
+      it.print(it.get_width()/5, 50, id(small_font), BLACK, TextAlign::CENTER, "Mixer");
+      it.print(it.get_width()/2, 50, id(small_font), RED, TextAlign::CENTER, "Target");
+      it.print((it.get_width()/5)*4, 50, id(small_font), BLACK, TextAlign::CENTER, "Tub");
+
+      it.printf(it.get_width()/5, 80, id(large_font), BLACK, TextAlign::CENTER, "%.1f", id(mixer_temp));
+      it.printf(it.get_width()/2, 80, id(large_font), RED, TextAlign::CENTER, "%d", id(target_temp));
+      it.printf((it.get_width()/5)*4, 80, id(large_font), BLACK, TextAlign::CENTER, "%.1f", id(tub_temp));
+
+      it.print(it.get_width()/5, 220, id(large_font), WHITE, TextAlign::CENTER, "+");
+      if (id(running)) {
+        it.print(it.get_width()/2, 220, id(large_font), WHITE, TextAlign::CENTER, "Off");
+      }
+      else {
+        it.print(it.get_width()/2, 220, id(large_font), WHITE, TextAlign::CENTER, "On");
+      }
+      it.print((it.get_width()/5)*4, 220, id(large_font), WHITE, TextAlign::CENTER, "-");
