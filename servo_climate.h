@@ -1,10 +1,17 @@
-#include <chrono>
-#include <cstdint>
+#pragma once
 
+#include <array>
+#include <chrono>
+
+#include "esphome.h"
 #include "esphome/core/component.h"
 #include "esphome/components/servo/servo.h"
+#include "esphome/components/sensor/sensor.h"
+#include "esphome/components/climate/climate.h"
+#include "esphome/components/climate/climate_traits.h"
+#include "esphome/components/climate/climate_mode.h"
 
-namespace esphome::stable_control {
+namespace esphome::servo_climate {
 
 struct voltage {
   voltage() = default;
@@ -23,10 +30,17 @@ struct temperature {
 
 struct state {
   state() = default;
-  state(temperature temp) : temperature{ temp } {}
-  temperature temperature{};
+  state(temperature temp) : temp{ temp } {}
+  temperature temp{};
   std::chrono::time_point<std::chrono::system_clock> timestamp{ std::chrono::system_clock::now() };
 };
+
+namespace stx {
+template< class T, class... Args >
+constexpr T* construct_at( T* p, Args&&... args ) {
+  return ::new (static_cast<void*>(p)) T(std::forward<Args>(args)...);
+}
+}
 
 template <typename storage_t, std::size_t len>
 struct circular_buffer {
@@ -34,11 +48,12 @@ struct circular_buffer {
 
   /// \param args arguments to forward to constructor of storage_t
   /// \return removed item, the oldest item
-  constexpr auto emplace(auto&&... args) -> storage_t {
+  template <typename... Args>
+  constexpr auto emplace(Args&&... args) -> storage_t {
     // TODO this move is not working for non copyable types
     storage_t removed_item{ std::move(*insert_pos_) };
     front_ = insert_pos_;
-    std::construct_at(insert_pos_, std::forward<decltype(args)>(args)...);
+    stx::construct_at(insert_pos_, std::forward<decltype(args)>(args)...);
     std::advance(insert_pos_, 1);
     if (insert_pos_ == std::end(buffer_)) {
       insert_pos_ = std::begin(buffer_);
@@ -60,7 +75,8 @@ struct circular_buffer {
   /// buffer[len - 1] is the oldest inserted item
   constexpr auto operator[](std::size_t n) const noexcept -> storage_t const& {
     // assert(n < len && "Index out of bounds");
-    auto idx{ std::ranges::distance(std::cbegin(buffer_), front_) };
+    typename std::array<storage_t, len>::const_iterator front{ front_ };
+    auto idx{ std::distance(std::cbegin(buffer_), front) };
     idx -= n;
     if (idx < 0) {
       idx += len;
@@ -79,36 +95,70 @@ struct circular_buffer {
 
 static constexpr char const* const TAG = "stable_control";
 
-class stable_control : public Component {
+class servo_climate : public climate::Climate, public Component {
 
 public:
+  //virtual ~stable_control() {};
   void setup() override {
     // config set output::FloatOutput
   }
 
-  void dump_config() override;
+  void set_sensor(sensor::Sensor *sensor) { sensor_ = sensor; }
+  void set_servo(servo::Servo *servo) { servo_ = servo; }
+
+  void control(const ClimateCall &call) override {
+    if (call.get_mode().has_value()) {
+      // User requested mode change
+      ClimateMode mode = *call.get_mode();
+      // Send mode to hardware
+      // ...
+      // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+      // Publish updated state
+      this->mode = mode;
+      this->publish_state();
+    }
+    if (call.get_target_temperature().has_value()) {
+      // User requested target temperature change
+      float temp = *call.get_target_temperature();
+      this->set_target_temperature(temp);
+      // Send target temp to climate
+      // ...
+    }
+  }
+  ClimateTraits traits() override {
+    // The capabilities of the climate device
+    auto traits = climate::ClimateTraits();
+    traits.set_supports_current_temperature(true);
+    traits.set_supported_modes({climate::CLIMATE_MODE_HEAT});
+    return traits;
+  }
+
+  void dump_config() override {}
+
+protected:
 
   void increment() {
     if (this->last_level_ + this->increment_ > 1.0f) {
       ESP_LOGW(TAG, "Output level is already at maximum, not incrementing.");
-      this->output_->set_level(1.0f);
+      this->servo_->write(1.0f);
       this->last_level_ = 1.0f;
       return;
     }
     this->last_level_ += this->increment_;
-    this->output_->set_level(this->last_level_);
+    this->servo_->write(this->last_level_);
     ESP_LOGD(TAG, "Incrementing output level to: %f", this->last_level_);
   }
 
   void decrement() {
-    if (this->last_level_ - this->increment_ < 0.0f) {
+    if (this->last_level_ - this->increment_ < -1.0f) {
       ESP_LOGW(TAG, "Output level is already at minimum, not decrementing.");
-      this->output_->set_level(0.0f);
-      this->last_level_ = 0.0f;
+      this->servo_->write(-1.0f);
+      this->last_level_ = -1.0f;
       return;
     }
     this->last_level_ -= this->increment_;
-    this->output_->set_level(this->last_level_);
+    this->servo_->write(this->last_level_);
     ESP_LOGD(TAG, "Decrementing output level to: %f", this->last_level_);
   }
 
@@ -151,13 +201,11 @@ public:
   }
   void set_target_temperature(float target_temperature) {
     this->target_temperature_ = target_temperature;
-
   }
 
-
-protected:
   // config
-  output::FloatOutput* output_{ nullptr };
+  sensor::Sensor *sensor_{ nullptr };
+  servo::Servo* servo_{ nullptr };
   float increment_{ 0.01f }; // default 1%, each step is 1% of the voltage range
   std::uint32_t settling_time_{ 5000 }; // default 5 seconds, results in 500 seconds for calibration
   float settling_deviation_{ 0.1f }; // default 0.1 degree, settling deviation means the temperature must stay within this range for the settling time

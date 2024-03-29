@@ -5,6 +5,16 @@
 esphome:
   name: hot-tub
   friendly_name: "Hot tub"
+  platformio_options:
+    build_flags:
+      -std=gnu++23
+      -std=c++23
+    build_unflags:
+#      -fno-rtti
+      -std=gnu++11
+  includes:
+    - servo_climate.h
+#    - my_climate.hpp
 
 external_components:
   - source: components
@@ -52,8 +62,8 @@ web_server:
 api:
 
 wifi:
-  ssid: "Pottur"
-  password: "sjb2709sjb"
+  ssid: "DialUp_Things"
+  password: "jbb2410abh"
   ap:
     ssid: "Fallback Hotspot"
     password: "Th1s1s4P4ssw0rd"
@@ -61,6 +71,16 @@ wifi:
 # In combination with the `ap` this allows the user
 # to provision Wi-Fi credentials to the device.
 captive_portal:
+
+# Example configuration entry for SPI chips
+#ethernet:
+#  type: W5500
+#  clk_pin: GPIO18
+#  mosi_pin: GPIO23
+#  miso_pin: GPIO19
+#  cs_pin: GPIO26
+#  interrupt_pin: GPIO34
+#  reset_pin: GPIO13
 
 dallas:
   - pin: GPIO5
@@ -91,11 +111,11 @@ sensor:
       then:
         - lambda: |-
             id(tub_temp) = x;
-  - platform: pid
-    name: Mixer sensor pid
-    type: HEAT
-    id: mixer_pid
-    climate_id: mixer_climate
+#  - platform: custom
+#    name: Mixer sensor pid
+#    type: HEAT
+#    id: mixer_pid
+#    climate_id: mixer_climate
 #    on_value:
 #      then:
 #        output.set_level:
@@ -119,23 +139,25 @@ sensor:
 #            printf("valve ctrl level %f\n", ret);
 #            return ret;
 
+servo:
+  - id: my_servo
+    output: placeholder_1
+
 climate:
-  - platform: pid
-    id: mixer_climate
-    name: Mixer pid
-    sensor: mixer_temp_sensor
-    default_target_temperature: 41°C
-    heat_output: placeholder_1
-    control_parameters:
-      kp: 0.001
-      ki: 0.005
-      kd: 0.007
-      min_integral: -1
-      max_integral: 1
-    visual:
-      min_temperature: 2 °C
-      max_temperature: 46 °C
-      temperature_step: 1 °C
+  - platform: custom
+    lambda: |-
+      auto my_custom_climate = new servo_climate::servo_climate();
+      App.register_component(my_custom_climate);
+      return {my_custom_climate};
+    climates:
+      - name: Mixer pid
+        id: mixer_climate
+#        sensor: mixer_temp_sensor
+#        default_target_temperature: 41°C
+        visual:
+          min_temperature: 18 °C
+          max_temperature: 46 °C
+          temperature_step: 1 °C
   - platform: pid
     id: tub_climate
     name: Tub pid
@@ -283,7 +305,7 @@ output:
     id: gpio_32_backlight_pwm
   - platform: ledc
     id: placeholder_1
-    pin: GPIO26
+    pin: GPIO3
     frequency: 50 Hz
 
 light:
