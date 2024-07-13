@@ -7617,6 +7617,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 85.09 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f23d464f-a072-4b0b-86dd-6104b9e3c63a")
 		)
@@ -7956,6 +7965,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C347404"
+			(at 132.08 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b725d848-8809-4aca-98ae-ccc550b3d72b")
 		)
@@ -8026,6 +8044,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 21.59 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 15.24 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8175,6 +8202,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C316680"
+			(at 201.93 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c284ebc6-5642-45e7-b526-eefb27c18059")
 		)
@@ -8316,6 +8352,15 @@
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 269.24 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C480514"
+			(at 271.78 157.4799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9263,6 +9308,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C169378"
+			(at 148.59 67.564 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "e45e93eb-c131-4779-a440-97ae3f5bab05")
 		)
@@ -9457,6 +9511,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 113.03 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 106.68 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10678,6 +10741,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C169381"
+			(at 218.44 70.104 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b272f8bd-c5b7-4173-b75b-c1bcb0066d78")
 		)
@@ -10810,6 +10882,15 @@
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 			(at 53.34 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2891808"
+			(at 58.42 33.0199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10959,6 +11040,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2891808"
+			(at 58.42 64.7699 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7a97dbb1-1074-4c5f-9772-3304fa1d0141")
 		)
@@ -11090,6 +11180,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 25.4 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 19.05 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11573,6 +11672,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C434435"
+			(at 127 29.5274 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "39e9574b-bd34-46d8-bb8f-4630344ba700")
 		)
@@ -11638,6 +11746,15 @@
 		)
 		(property "Description" "-74A Id, -55V Vds, Single P-Channel HEXFET Power MOSFET, 20mOhm Ron, TO-220AB"
 			(at 165.1 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2620"
+			(at 169.926 26.162 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12125,6 +12242,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2620"
+			(at 114.046 26.162 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "aa59d0a7-f6f1-4996-a803-1a0b6ed2fd0b")
 		)
@@ -12595,6 +12721,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C5160786"
+			(at 176.53 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f2226196-d883-47da-98ee-b11672f00859")
 		)
@@ -12659,6 +12794,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 113.03 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 106.68 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12939,6 +13083,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 63.5 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0dd68b8e-b9dc-427b-9659-26e332b46ede")
 		)
@@ -13078,6 +13231,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C480525"
+			(at 273.05 29.2099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8b780f00-f1f0-4a9e-973d-634e708e3a61")
 		)
@@ -13142,6 +13304,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 69.85 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 63.5 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13419,6 +13590,15 @@
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 			(at 157.48 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2891808"
+			(at 152.4 34.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13895,6 +14075,15 @@
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 270.51 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C480509"
+			(at 273.05 44.4499 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14580,6 +14769,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C434435"
+			(at 35.56 65.0874 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ce252149-aa8f-4363-810a-626f3e73d535")
 		)
@@ -14714,6 +14912,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 128.27 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "eff1deea-58c4-42f2-9728-b9d0ebc829b1")
 		)
@@ -14778,6 +14985,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 74.93 226.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 68.58 226.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15405,6 +15621,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C480514"
+			(at 273.05 16.5099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "078457e2-fd4b-4c6e-b546-96928c66c80d")
 		)
@@ -15468,6 +15693,15 @@
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 259.08 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C480525"
+			(at 261.62 91.4399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15543,6 +15777,15 @@
 		)
 		(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 			(at 101.6 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2891808"
+			(at 96.52 34.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15992,6 +16235,15 @@
 		)
 		(property "Description" "SZYY0805YG"
 			(at 179.07 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C434435"
+			(at 182.88 29.5274 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16486,6 +16738,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 99.06 226.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "105d6436-13e0-4d0e-91b8-e89952ac9b7b")
 		)
@@ -16765,6 +17026,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C480525"
+			(at 273.05 58.4199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "05dff7b2-f0e6-4f50-855c-f97c2caaef07")
 		)
@@ -16829,6 +17099,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 25.4 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 19.05 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17178,6 +17457,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C189895"
+			(at 191.77 160.0199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b900a34d-d697-4c23-afb2-389bbb333293")
 		)
@@ -17401,6 +17689,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 40.64 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7f1abc1e-c19c-4b4f-b877-8c4fc49a56ef")
 		)
@@ -17465,6 +17762,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 46.99 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 40.64 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17801,6 +18107,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 68.58 259.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 62.23 259.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18341,6 +18656,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 99.06 257.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0435fd33-1959-4107-8b25-cdb36f5d3aef")
 		)
@@ -18407,6 +18731,15 @@
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
 			(at 270.51 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C480525"
+			(at 273.05 77.4699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18951,6 +19284,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C916425"
+			(at 85.09 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1ddbbde2-5fcc-42d0-ac39-5153e2579daf")
 		)
@@ -19148,6 +19490,15 @@
 		)
 		(property "Description" "Vr 30V, If 200mA, Dual schottky barrier diode, in series, SOT-323"
 			(at 21.59 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C916425"
+			(at 15.24 29.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19493,6 +19844,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C434435"
+			(at 35.56 33.3374 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a2f8b33e-a7ff-4b60-85e1-e0ef25f91e64")
 		)
@@ -19669,6 +20029,15 @@
 					(size 1.27 1.27)
 				)
 				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C5248080"
+			(at 218.44 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 				(hide yes)
 			)
 		)
