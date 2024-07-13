@@ -4985,10 +4985,22 @@
 		(uuid "48651b14-3d49-4816-8543-18f9bcd3df91")
 	)
 	(junction
+		(at 123.19 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7d234d3a-5a16-4464-a8a0-94bf96821cda")
+	)
+	(junction
 		(at 55.88 29.21)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "913e3b15-2441-44c6-8dee-7c826bb71289")
+	)
+	(junction
+		(at 179.07 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9505ff1c-86e6-4ccc-942d-5febb0c94e32")
 	)
 	(junction
 		(at 185.42 63.5)
@@ -5015,12 +5027,6 @@
 		(uuid "b464af87-d37b-4e0c-8526-51ec1e6431ad")
 	)
 	(junction
-		(at 179.07 25.4)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b4cfc17e-897b-44a9-8f75-4cfaaa800bd7")
-	)
-	(junction
 		(at 158.75 66.04)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5031,12 +5037,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c080f2dd-b89d-4dfd-bbbe-72bb2d4839b7")
-	)
-	(junction
-		(at 123.19 25.4)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c5156636-28b8-43c8-ad08-a56ab6432ca3")
 	)
 	(junction
 		(at 167.64 33.02)
@@ -5248,16 +5248,6 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 25.4) (xy 130.81 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2aba9e29-0aed-4f3f-bad2-d9b139d531b0")
-	)
-	(wire
-		(pts
 			(xy 55.88 29.21) (xy 57.15 29.21)
 		)
 		(stroke
@@ -5398,16 +5388,6 @@
 	)
 	(wire
 		(pts
-			(xy 179.07 25.4) (xy 186.69 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4bf8819a-1af4-4799-9783-e84c4304c43c")
-	)
-	(wire
-		(pts
 			(xy 53.34 134.62) (xy 53.34 135.89)
 		)
 		(stroke
@@ -5458,6 +5438,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 25.4) (xy 186.69 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "682bf1f2-74bb-4f55-8e0d-1f0153692ef7")
+	)
+	(wire
+		(pts
 			(xy 29.21 106.68) (xy 29.21 109.22)
 		)
 		(stroke
@@ -5505,6 +5495,16 @@
 			(type default)
 		)
 		(uuid "6c1bb6ce-3d1c-4995-a631-73288331e4cd")
+	)
+	(wire
+		(pts
+			(xy 123.19 25.4) (xy 130.81 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6cb451e9-d2e4-432f-891a-5a9fdecd6dc8")
 	)
 	(wire
 		(pts
@@ -8026,7 +8026,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Phoenix_MC:PhoenixContact_MCV_1,5_2-G-3.81_1x02_P3.81mm_Vertical"
 			(at 269.24 157.48 0)
 			(effects
 				(font
@@ -9754,76 +9754,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:LED")
-		(at 179.07 29.21 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3986ffc8-ddec-4d8d-9b9e-0312151aa734")
-		(property "Reference" "D4"
-			(at 182.88 29.5274 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "LED"
-			(at 182.88 32.0674 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 179.07 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode"
-			(at 179.07 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "39e7dfc9-1c76-4e5e-8c00-5bcb8d8ee083")
-		)
-		(pin "2"
-			(uuid "6ed82346-5ae4-441e-8920-2ee1932dac1f")
-		)
-		(instances
-			(project "jacuzzi"
-				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
-					(reference "D4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 114.3 64.77 0)
 		(unit 1)
@@ -10980,6 +10910,76 @@
 			(project "jacuzzi"
 				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
 					(reference "#PWR017")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 123.19 29.21 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4b56aba5-704d-4e19-850a-00afa8617571")
+		(property "Reference" "D2"
+			(at 127 29.5274 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "GREEN LED"
+			(at 127 32.0674 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+			(at 123.19 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 123.19 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "SZYY0805YG"
+			(at 123.19 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "39e9574b-bd34-46d8-bb8f-4630344ba700")
+		)
+		(pin "1"
+			(uuid "4816ca9b-b846-4245-abdc-abd38f53076f")
+		)
+		(instances
+			(project "jacuzzi"
+				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -12153,76 +12153,6 @@
 			(project "jacuzzi"
 				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
 					(reference "R9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:LED")
-		(at 31.75 64.77 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "61cbcf58-d7e1-40a0-8c7d-68d0d9f2accd")
-		(property "Reference" "D13"
-			(at 35.56 65.0874 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "GREEN LED"
-			(at 35.56 67.6274 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 31.75 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 31.75 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode"
-			(at 31.75 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "89586929-4d33-450a-86a7-3b949c0f21ab")
-		)
-		(pin "1"
-			(uuid "8865ad88-7516-41f1-88e3-07a415ac45bf")
-		)
-		(instances
-			(project "jacuzzi"
-				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
-					(reference "D13")
 					(unit 1)
 				)
 			)
@@ -14007,6 +13937,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:LED")
+		(at 31.75 64.77 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "87100591-1fab-4ea9-93bb-77e20f55002c")
+		(property "Reference" "D13"
+			(at 35.56 65.0874 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "GREEN LED"
+			(at 35.56 67.6274 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+			(at 31.75 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 31.75 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "SZYY0805YG"
+			(at 31.75 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ce252149-aa8f-4363-810a-626f3e73d535")
+		)
+		(pin "1"
+			(uuid "cc2bd39c-900f-4a98-9fcf-4f0ebd5365d1")
+		)
+		(instances
+			(project "jacuzzi"
+				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
+					(reference "D13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 265.43 62.23 0)
 		(unit 1)
@@ -14787,7 +14787,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Phoenix_MC:PhoenixContact_MCV_1,5_2-G-3.81_1x02_P3.81mm_Vertical"
 			(at 270.51 16.51 0)
 			(effects
 				(font
@@ -15354,6 +15354,76 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:LED")
+		(at 179.07 29.21 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a3fbe01f-d2db-441e-bad4-b63cfcba9f53")
+		(property "Reference" "D4"
+			(at 182.88 29.5274 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "GREEN LED"
+			(at 182.88 32.0674 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+			(at 179.07 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 179.07 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "SZYY0805YG"
+			(at 179.07 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "f48f5cb4-7db4-4daa-a4ee-0f8f32de8c87")
+		)
+		(pin "1"
+			(uuid "6ae5a3a8-29b7-4ed9-b817-426371377c9b")
+		)
+		(instances
+			(project "jacuzzi"
+				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 157.48 129.54 0)
 		(mirror y)
@@ -15767,76 +15837,6 @@
 			(project ""
 				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
 					(reference "J8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:LED")
-		(at 123.19 29.21 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b393132c-15e5-409f-b83e-d1c382bae43b")
-		(property "Reference" "D2"
-			(at 127 29.5274 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "LED"
-			(at 127 32.0674 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 123.19 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 123.19 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode"
-			(at 123.19 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2bbfb03c-4075-4417-a872-591930eca473")
-		)
-		(pin "2"
-			(uuid "2c1b3156-1959-40c3-a6e5-b698f0c7e2d7")
-		)
-		(instances
-			(project "jacuzzi"
-				(path "/e3356171-6a1e-4487-a92f-bfc95dda0e5b"
-					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -18458,7 +18458,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 31.75 33.02 0)
 			(effects
 				(font
@@ -18476,7 +18476,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Light emitting diode"
+		(property "Description" "SZYY0805YG"
 			(at 31.75 33.02 0)
 			(effects
 				(font
