@@ -2,4 +2,5 @@
   (version 7)
   (lib (name "ESP32-DEVKITC-32U")(type "KiCad")(uri "/Users/elmar/Downloads/ESP32-DEVKITC-32U/ESP32-DEVKITC-32U.kicad_sym")(options "")(descr ""))
   (lib (name "UJC-HP-3-SMT-TR")(type "KiCad")(uri "/Users/elmar/Dev/hot-tub/components/UJC-HP-3-SMT-TR/UJC-HP-3-SMT-TR.kicad_sym")(options "")(descr ""))
+  (lib (name "custom")(type "KiCad")(uri "/Users/elmar/Dev/hot-tub/components/createdByJon/custom.kicad_sym")(options "")(descr ""))
 )

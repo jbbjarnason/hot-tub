@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 10.0,
-          "width": 10.0
+          "height": 0.5,
+          "width": 1.45
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -116,7 +116,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.2,
+        "min_clearance": 0.127,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_hole_clearance": 0.25,
@@ -128,7 +128,7 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.2,
+        "min_track_width": 0.127,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
@@ -501,6 +501,23 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 118
+      },
+      {
+        "bus_width": 5,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 2,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "5mills",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
+        "wire_width": 5
       }
     ],
     "meta": {
@@ -526,15 +543,15 @@
         "pattern": "/TubValve_NC"
       },
       {
-        "netclass": "0.5mm",
+        "netclass": "Default",
         "pattern": "/BallValveOpen"
       },
       {
-        "netclass": "0.5mm",
+        "netclass": "Default",
         "pattern": "/BallValveClose"
       },
       {
-        "netclass": "0.5mm",
+        "netclass": "Default",
         "pattern": "GND"
       },
       {
@@ -548,6 +565,26 @@
       {
         "netclass": "0.5mm",
         "pattern": "+3.3V"
+      },
+      {
+        "netclass": "3mm",
+        "pattern": "/Solenoid_V"
+      },
+      {
+        "netclass": "3mm",
+        "pattern": "/Solenoid_NO"
+      },
+      {
+        "netclass": "3mm",
+        "pattern": "/Solenoid_NC"
+      },
+      {
+        "netclass": "5mills",
+        "pattern": "VS5mills"
+      },
+      {
+        "netclass": "5mills",
+        "pattern": "VS 5mills"
       }
     ]
   },
