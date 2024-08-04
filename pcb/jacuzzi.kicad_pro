@@ -504,7 +504,7 @@
       },
       {
         "bus_width": 118,
-        "clearance": 0.2,
+        "clearance": 1.0,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -568,7 +568,7 @@
         "pattern": "/BallValveClose"
       },
       {
-        "netclass": "Default",
+        "netclass": "0.3mm",
         "pattern": "GND"
       },
       {
